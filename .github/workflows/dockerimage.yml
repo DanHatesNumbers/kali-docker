@@ -16,7 +16,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: danhatesnumbers/kali-docker
+        name: danhatesnumbers/kali-docker/kali-docker
         username: DanHatesNumbers
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
