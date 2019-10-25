@@ -10,16 +10,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
-    env: 
-      TIMESTAMP_TAG: ${date +%F}-$(echo "${GITHUB_SHA}" | cut -c1-6)
 
     steps:
     - uses: actions/checkout@v1
     - name: Set tag timestamp env
       run: echo ::set-env name=TIMESTAMP::$(date +%F)
     - name: Set tag hash env
-      run: echo ::set-env name=SHA::$(echo "${GITHUB_SHA}" | cut -c1-6))
+      run: echo ::set-env name=SHA::$(echo "${GITHUB_SHA}" | cut -c1-6)
     - name: Docker login
       run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ secrets.GITHUB_TOKEN }}
     - name: Docker build
