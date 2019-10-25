@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Docker login
-      run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ GITHUB_TOKEN }}
+      run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ secrets.GITHUB_TOKEN }}
     - name: Docker build
       run: docker build -t danhatesnumbers/kali-docker:latest .
     - name: Docker tag with date
