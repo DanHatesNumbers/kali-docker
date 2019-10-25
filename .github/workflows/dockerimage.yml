@@ -20,10 +20,10 @@ jobs:
     - name: Docker login
       run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ secrets.GITHUB_TOKEN }}
     - name: Docker build
-      run: docker build -t danhatesnumbers/kali-docker:latest .
+      run: docker build -t docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:latest .
     - name: Docker tag with date
-      run: docker tag danhatesnumbers/kali-docker:latest danhatesnumbers/kali-docker:$TIMESTAMP-$SHA
+      run: docker tag docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:latest docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:$TIMESTAMP-$SHA
     - name: Publish timestamped docker tag
-      run: docker push danhatesnumbers/kali-docker:$TIMESTAMP-$SHA
+      run: docker push docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:$TIMESTAMP-$SHA
     - name: Publish latest docker tag
-      run: docker push danhatesnumbers/kali-docker:latest
+      run: docker push docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:latest
