@@ -13,9 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Authenticate to Github Package Registry
-      run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ secrets.GITHUB_TOKEN }}
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag docker.pkg.github.com/DanHatesNumbers/kali-docker/kali-docker:$(date +%s) --tag docker.pkg.github.com/DanHatesNumbers/kali-docker/kali-docker:latest
-    - name: Publish Docker Image
-      run: docker push docker.pkg.github.com/DanHatesNumbers/kali-docker/kali-docker:latest
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: danhatesnumbers/kali-docker
+        username: DanHatesNumbers
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
