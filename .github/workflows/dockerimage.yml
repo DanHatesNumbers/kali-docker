@@ -16,13 +16,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Set tag timestamp env
+      run: echo ::set-env name=TIMESTAMP::$(date +%F)
+    - name: Set tag hash env
+      run: echo ::set-env name=SHA::$(echo "${GITHUB_SHA}" | cut -c1-6))
     - name: Docker login
       run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ secrets.GITHUB_TOKEN }}
     - name: Docker build
       run: docker build -t danhatesnumbers/kali-docker:latest .
     - name: Docker tag with date
-      run: docker tag danhatesnumbers/kali-docker:latest danhatesnumbers/kali-docker:$TIMESTAMP_TAG
+      run: docker tag danhatesnumbers/kali-docker:latest danhatesnumbers/kali-docker:$TIMESTAMP-$SHA
     - name: Publish timestamped docker tag
-      run: docker push danhatesnumbers/kali-docker:$TIMESTAMP_TAG
+      run: docker push danhatesnumbers/kali-docker:$TIMESTAMP-$SHA
     - name: Publish latest docker tag
       run: docker push danhatesnumbers/kali-docker:latest
