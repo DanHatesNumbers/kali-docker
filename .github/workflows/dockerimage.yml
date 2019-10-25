@@ -10,13 +10,19 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    env: 
+      TIMESTAMP_TAG: ${date +%F}-$(echo "${GITHUB_SHA}" | cut -c1-6)
 
     steps:
     - uses: actions/checkout@v1
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: danhatesnumbers/kali-docker/kali-docker
-        username: DanHatesNumbers
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
+    - name: Docker login
+      run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ GITHUB_TOKEN }}
+    - name: Docker build
+      run: docker build -t danhatesnumbers/kali-docker:latest .
+    - name: Docker tag with date
+      run: docker tag danhatesnumbers/kali-docker:latest danhatesnumbers/kali-docker:$TIMESTAMP_TAG
+    - name: Publish timestamped docker tag
+      run: docker push danhatesnumbers/kali-docker:$TIMESTAMP_TAG
+    - name: Publish latest docker tag
+      run: docker push danhatesnumbers/kali-docker:latest
