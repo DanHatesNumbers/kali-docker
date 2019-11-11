@@ -18,12 +18,12 @@ jobs:
     - name: Set tag hash env
       run: echo ::set-env name=SHA::$(echo "${GITHUB_SHA}" | cut -c1-6)
     - name: Docker login
-      run: docker login docker.pkg.github.com --username DanHatesNumbers --password ${{ secrets.GITHUB_TOKEN }}
+      run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
     - name: Docker build
-      run: docker build -t docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:latest .
+      run: docker build -t danielmurphy/kali-docker:latest .
     - name: Docker tag with date
-      run: docker tag docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:latest docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:$TIMESTAMP-$SHA
+      run: docker tag danielmurphy/kali-docker:latest danielmurphy/kali-docker:$TIMESTAMP-$SHA
     - name: Publish timestamped docker tag
-      run: docker push docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:$TIMESTAMP-$SHA
+      run: docker push danielmurphy/kali-docker:$TIMESTAMP-$SHA
     - name: Publish latest docker tag
-      run: docker push docker.pkg.github.com/danhatesnumbers/kali-docker/kali-docker:latest
+      run: docker push danielmurphy/kali-docker:latest
