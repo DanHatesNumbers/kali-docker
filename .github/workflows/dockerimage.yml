@@ -18,7 +18,7 @@ jobs:
     - name: Set tag hash env
       run: echo ::set-env name=SHA::$(echo "${GITHUB_SHA}" | cut -c1-6)
     - name: Docker login
-      run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      run: docker login --username danielmurphy --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
     - name: Docker build
       run: docker build -t danielmurphy/kali-docker:latest .
     - name: Docker tag with date
